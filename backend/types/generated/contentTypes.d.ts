@@ -430,6 +430,69 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiDailyMenuDailyMenu extends Struct.CollectionTypeSchema {
+  collectionName: 'daily_menus';
+  info: {
+    displayName: 'Daily Menu';
+    pluralName: 'daily-menus';
+    singularName: 'daily-menu';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::daily-menu.daily-menu'
+    > &
+      Schema.Attribute.Private;
+    menu: Schema.Attribute.Text;
+    postre: Schema.Attribute.Relation<'oneToOne', 'api::dish.dish'>;
+    price: Schema.Attribute.Decimal;
+    primero: Schema.Attribute.Relation<'oneToOne', 'api::dish.dish'>;
+    publishedAt: Schema.Attribute.DateTime;
+    segundo: Schema.Attribute.Relation<'oneToOne', 'api::dish.dish'>;
+    suma: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiDishDish extends Struct.CollectionTypeSchema {
+  collectionName: 'dishes';
+  info: {
+    displayName: 'Dish';
+    pluralName: 'dishes';
+    singularName: 'dish';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    allergens: Schema.Attribute.Component<'shared.allergen', true>;
+    cover: Schema.Attribute.Media<'images' | 'files', true> &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::dish.dish'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    price: Schema.Attribute.Decimal;
+    publishedAt: Schema.Attribute.DateTime;
+    type: Schema.Attribute.Enumeration<['Primero', 'Segundo ', 'Postre']>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -941,6 +1004,8 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::daily-menu.daily-menu': ApiDailyMenuDailyMenu;
+      'api::dish.dish': ApiDishDish;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

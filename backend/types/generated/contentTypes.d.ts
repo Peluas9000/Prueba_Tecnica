@@ -456,7 +456,7 @@ export interface ApiDailyMenuDailyMenu extends Struct.CollectionTypeSchema {
     primero: Schema.Attribute.Relation<'oneToOne', 'api::dish.dish'>;
     publishedAt: Schema.Attribute.DateTime;
     segundo: Schema.Attribute.Relation<'oneToOne', 'api::dish.dish'>;
-    suma: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    suma: Schema.Attribute.Decimal;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

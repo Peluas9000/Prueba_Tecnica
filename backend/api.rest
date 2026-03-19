@@ -1,0 +1,43 @@
+@baseUrl = http://localhost:1337/api
+@token = f86d6964961ac5b45525ca883af5245591841011a1b73867b2279a381de7ad301c52c5a4c1d9af36a610fcb03f18edc472364519f5a46f4726261e086e439a9991c302fdfb474d8ff9bfc883cec64f735a7d3665136e20ee11804777f71b866160e4ac63176a79a18968c586f66b2f41c966ed76c498e113d1c0b550bb62915b
+
+###
+# ------------------------------------------
+# 1. OBTENER TODOS LOS MENÚS (Sin filtros)
+# ------------------------------------------
+GET {{baseUrl}}/daily-menus?min_precio=15
+Authorization: Bearer {{token}}
+
+
+###
+# ------------------------------------------
+# 2. FILTRAR MENÚS POR RANGO DE PRECIOS
+# (Usando tu controlador 'find' modificado)
+# ------------------------------------------
+GET {{baseUrl}}/daily-menus?min_precio=10&max_precio=20
+Authorization: Bearer {{token}}
+
+
+###
+# ------------------------------------------
+# 3. FILTRAR MENÚS EXCLUYENDO ALÉRGENOS
+# (Usando tu controlador 'find' modificado)
+# ------------------------------------------
+GET {{baseUrl}}/daily-menus?excluir_alergenos=gluten,lactosa
+Authorization: Bearer {{token}}
+
+
+###
+# ------------------------------------------
+# 4. OBTENER SOLO LOS POSTRES (Ruta Custom)
+# ------------------------------------------
+GET {{baseUrl}}/menus/postres
+Authorization: Bearer {{token}}
+
+
+###
+#5.OBTENER LOS PLATOS MÁS POPULARES (Ruta Custom)
+# ------------------------------------------
+
+GET {{baseUrl}}/platos/populares
+Authorization: Bearer {{token}}

@@ -33,8 +33,7 @@
       "type": "decimal"
     },
     "suma": {
-      "type": "decimal",
-      "default": 0
+      "type": "decimal"
     }
   }
 }

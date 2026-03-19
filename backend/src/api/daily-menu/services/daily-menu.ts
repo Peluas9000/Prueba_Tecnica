@@ -13,16 +13,44 @@ interface Menu {
 export default factories.createCoreService(
   "api::daily-menu.daily-menu",
   ({ strapi }) => ({
+    async calcularIvaPlato(identificador: any) {
+      // 1. Si no hay ID, devolvemos 0
+      if (!identificador) return 0;
+
+      // 2. Usamos db.query SIEMPRE. Es ciego al Draft/Publish y nunca falla.
+      const plato: any = await strapi.db.query("api::dish.dish").findOne({
+        where:
+          typeof identificador === "string"
+            ? { documentId: identificador }
+            : { id: identificador },
+      });
+
+      // Si no encuentra el plato o no tiene precio, suma 0
+      if (!plato || !plato.price) return 0;
+
+      let porcentajeIva = 0;
+
+      // 3. Calculamos el impuesto
+      if (plato.type === "Primero" || plato.type === "Segundo") {
+        porcentajeIva = 0.1;
+      } else if (plato.type === "Postre") {
+        porcentajeIva = 0.21;
+      } else {
+        porcentajeIva = 0.1;
+      }
+
+      return plato.price + plato.price * porcentajeIva;
+    },
     async devolverPostresSinRepetir() {
       // 1. Consultar todos los menús y poblar SOLO la relación del postre
-      const menus = await strapi.entityService.findMany(
+      const menus = (await strapi.entityService.findMany(
         "api::daily-menu.daily-menu",
         {
           populate: {
             postre: true,
           },
         },
-      );
+      )) as Menu[];
 
       // Si no hay menús creados, devolvemos un array vacío para evitar errores
       if (!menus || menus.length === 0) {
@@ -31,7 +59,7 @@ export default factories.createCoreService(
 
       // 2. Extraer los postres y descartar los menús que se hayan guardado sin postre (null/undefined)
       const postresCrudos = menus
-        .map((menu) => menu.postre)
+        .map((dailyMenu) => dailyMenu.postre)
         .filter((postre) => postre !== null && postre !== undefined);
 
       // 3. Eliminar los duplicados.
@@ -40,7 +68,6 @@ export default factories.createCoreService(
       const mapaPostresUnicos = new Map();
 
       postresCrudos.forEach((postre) => {
-        // TypeScript podría quejarse si no tipamos, pero en JS puro/Strapi esto funciona directo
         mapaPostresUnicos.set(postre.id, postre);
       });
 

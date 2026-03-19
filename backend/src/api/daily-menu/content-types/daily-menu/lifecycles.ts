@@ -1,70 +1,98 @@
 import { errors } from "@strapi/utils";
-import { ApplicationError } from "@strapi/utils/dist/errors";
+
+function extraerIdReal(datoRelacion: any, idAntiguo: any = null) {
+  if (!datoRelacion) return idAntiguo;
+  if (typeof datoRelacion === "number" || typeof datoRelacion === "string")
+    return datoRelacion;
+
+  if (datoRelacion.connect && datoRelacion.connect.length > 0) {
+    return datoRelacion.connect[0].documentId || datoRelacion.connect[0].id;
+  }
+
+  // ¡AQUÍ ESTABA EL FALLO! Si el usuario no tocó los platos, connect viene vacío [].
+  // En ese caso tenemos que usar los que ya estaban guardados (idAntiguo)
+  if (datoRelacion.connect && datoRelacion.connect.length === 0) {
+    return idAntiguo;
+  }
+
+  return null;
+}
 
 export default {
   async beforeCreate(event) {
     const { data } = event.params;
 
+    const idPrimero = extraerIdReal(data.primero);
+    const idSegundo = extraerIdReal(data.segundo);
+    const idPostre = extraerIdReal(data.postre);
+
     if (
-      data.primero === data.segundo ||
-      data.primero === data.postre ||
-      data.segundo === data.postre
-    )
+      (idPrimero && idPrimero === idSegundo) ||
+      (idPrimero && idPrimero === idPostre) ||
+      (idSegundo && idSegundo === idPostre)
+    ) {
       throw new errors.ApplicationError(
         "Los platos deben ser diferentes entre sí",
       );
+    }
 
-    //busqueda de los platos para calcular la suma de sus precios y guardarla en el campo suma del menú diario
-    const plato1 = await strapi.db.query("api::dish.dish").findOne({
-      where: { id: data.primero },
-    });
-
-    const plato2 = await strapi.db.query("api::dish.dish").findOne({
-      where: { id: data.segundo },
-    });
-
-    const plato3 = await strapi.db.query("api::dish.dish").findOne({
-      where: { id: data.postre },
-    });
-
-    //los precios de los platos con el iva aplicado
-    const plato1Price = await strapi
+    const p1Price = await strapi
       .service("api::daily-menu.daily-menu")
-      .calcularIvaPlato(plato1.id);
-    const plato2Price = await strapi
+      .calcularIvaPlato(idPrimero);
+    const p2Price = await strapi
       .service("api::daily-menu.daily-menu")
-      .calcularIvaPlato(plato2.id);
-    const plato3Price = await strapi
+      .calcularIvaPlato(idSegundo);
+    const p3Price = await strapi
       .service("api::daily-menu.daily-menu")
-      .calcularIvaPlato(plato3.id);
+      .calcularIvaPlato(idPostre);
 
-    data.suma = plato1Price + plato2Price + plato3Price;
+    data.suma = p1Price + p2Price + p3Price;
   },
 
   async beforeUpdate(event) {
-    const { data } = event.params;
+    const { data, where } = event.params;
+
+    const menuActual: any = await strapi.db
+      .query("api::daily-menu.daily-menu")
+      .findOne({
+        where: where,
+        populate: ["primero", "segundo", "postre"],
+      });
+
+    // Pasamos tanto el documentId como el id normal por seguridad
+    const idPrimero = extraerIdReal(
+      data.primero,
+      menuActual?.primero?.documentId || menuActual?.primero?.id,
+    );
+    const idSegundo = extraerIdReal(
+      data.segundo,
+      menuActual?.segundo?.documentId || menuActual?.segundo?.id,
+    );
+    const idPostre = extraerIdReal(
+      data.postre,
+      menuActual?.postre?.documentId || menuActual?.postre?.id,
+    );
 
     if (
-      data.primero === data.segundo ||
-      data.primero === data.postre ||
-      data.segundo === data.postre
-    )
+      (idPrimero && idPrimero === idSegundo) ||
+      (idPrimero && idPrimero === idPostre) ||
+      (idSegundo && idSegundo === idPostre)
+    ) {
       throw new errors.ApplicationError(
         "Los platos deben ser diferentes entre sí",
       );
+    }
 
-    const plato1 = await strapi.db.query("api::dish.dish").findOne({
-      where: { id: data.primero },
-    });
+    const p1Price = await strapi
+      .service("api::daily-menu.daily-menu")
+      .calcularIvaPlato(idPrimero);
+    const p2Price = await strapi
+      .service("api::daily-menu.daily-menu")
+      .calcularIvaPlato(idSegundo);
+    const p3Price = await strapi
+      .service("api::daily-menu.daily-menu")
+      .calcularIvaPlato(idPostre);
 
-    const plato2 = await strapi.db.query("api::dish.dish").findOne({
-      where: { id: data.segundo },
-    });
-
-    const plato3 = await strapi.db.query("api::dish.dish").findOne({
-      where: { id: data.postre },
-    });
-
-    data.suma = plato1.price + plato2.price + plato3.price;
+    data.suma = p1Price + p2Price + p3Price;
   },
 };

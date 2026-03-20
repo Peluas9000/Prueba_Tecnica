@@ -9,8 +9,7 @@ function extraerIdReal(datoRelacion: any, idAntiguo: any = null) {
     return datoRelacion.connect[0].documentId || datoRelacion.connect[0].id;
   }
 
-  // ¡AQUÍ ESTABA EL FALLO! Si el usuario no tocó los platos, connect viene vacío [].
-  // En ese caso tenemos que usar los que ya estaban guardados (idAntiguo)
+
   if (datoRelacion.connect && datoRelacion.connect.length === 0) {
     return idAntiguo;
   }

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#a03f28",
+              "background": "#fbfaee",
+              "surface": "#efeee3",
+              "on-surface": "#1b1c15",
+              "accent": "#006a66"
+            },
+            fontFamily: {
+              "serif": ["Playfair Display", "serif"],
+              "sans": ["Inter", "sans-serif"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-sans">
+<!-- Navigation Bar -->
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+<div class="container mx-auto px-4 h-20 flex justify-between items-center">
+<div class="text-2xl font-serif italic font-bold">The Daily Plate</div>
+<nav class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-wider">
+<a class="text-primary border-b-2 border-primary pb-1" href="#">Home</a>
+<a class="hover:text-primary transition-colors" href="#">Full Menu</a>
+<a class="hover:text-primary transition-colors" href="#">Reservations</a>
+<a class="hover:text-primary transition-colors" href="#">Our Story</a>
+</nav>
+<button class="p-2 hover:bg-gray-100 rounded-full">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
+</div>
+</header>
+<!-- Main Page Layout: Sidebar + Content -->
+<div class="container mx-auto px-4 py-8 flex flex-col lg:flex-row gap-12">
+<!-- Sidebar Filter -->
+<aside class="w-full lg:w-64 flex-shrink-0">
+<div class="bg-surface p-6 rounded-xl space-y-8">
+<div>
+<h2 class="font-serif text-xl font-bold mb-1">Filters</h2>
+<p class="text-xs uppercase opacity-60 tracking-widest">Refine your selection</p>
+</div>
+<!-- Price Range -->
+<div class="space-y-3">
+<label class="block text-xs font-semibold uppercase opacity-70">Price Range</label>
+<input class="w-full accent-primary" max="50" min="10" type="range" value="35"/>
+<div class="flex justify-between text-xs opacity-60">
+<span>10€</span>
+<span>50€</span>
+</div>
+</div>
+<!-- Dietary Options -->
+<div class="space-y-3">
+<label class="block text-xs font-semibold uppercase opacity-70">Allergens</label>
+<div class="flex flex-col gap-2">
+<button class="flex items-center gap-3 p-3 rounded-lg hover:bg-white transition-colors text-sm">
+<span class="material-symbols-outlined text-accent">energy_savings_leaf</span>
+<span>Vegan</span>
+</button>
+<button class="flex items-center gap-3 p-3 rounded-lg hover:bg-white transition-colors text-sm">
+<span class="material-symbols-outlined text-primary">earbuds</span>
+<span>Gluten-Free</span>
+</button>
+<button class="flex items-center gap-3 p-3 rounded-lg hover:bg-white transition-colors text-sm">
+<span class="material-symbols-outlined">egg</span>
+<span>Dairy-Free</span>
+</button>
+</div>
+</div>
+<button class="w-full bg-primary text-white py-3 rounded-lg text-sm font-bold uppercase tracking-widest hover:brightness-110 transition-all">
+                    Apply Filters
+                </button>
+</div>
+</aside>
+<!-- Main Content Section -->
+<main class="flex-1 space-y-20">
+<!-- Hero Highlight Section -->
+<section class="grid md:grid-cols-2 gap-8 items-center bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+<div class="space-y-6">
+<div>
+<span class="text-primary text-xs font-bold uppercase tracking-widest">Today's Highlight</span>
+<h1 class="text-5xl font-serif font-bold mt-2 leading-tight">Summer Peach &amp; Burrata</h1>
+</div>
+<p class="text-gray-600 leading-relaxed">
+                        Hand-picked heirloom peaches, creamy Pugliese burrata, wild honey drizzle, and toasted pistachios. A perfect balance of seasonal sweetness and savory creaminess.
+                    </p>
+<div class="flex items-center gap-6">
+<button class="bg-primary text-white px-8 py-4 rounded-lg font-bold uppercase text-sm hover:brightness-110 transition-all">
+                            Order Now
+                        </button>
+<span class="text-2xl font-serif font-bold">18€</span>
+</div>
+</div>
+<div>
+<img alt="Summer Peach and Burrata" class="w-full h-96 object-cover rounded-xl shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWxxbAdH57UlLe5zOwdYSrm5vlRk0L0uEivAxUnf3geRlSNQXEALRiIrRdy2T0NAs1mD1V0Y_3EuVgBs_fZImAy59svzsIodkosL2tBnKjaE_aw7ReD2Y2PkJFCB38seO0gNG6giZA1CMVOzZLOv1mzn0BZ9gYIedZup8K_3Y876OY7mTENx84JNWj7XtWJKQ7yWJSkHFH-RZULFFBkgwUs4I7PCuv4PAi00LEN3WxS7zDKwKuWt2_Je4TrFOpjzBeE0x9atts8lo"/>
+</div>
+</section>
+<!-- Menu of the Day: 3-Column Grid -->
+<section>
+<div class="text-center mb-10">
+<h2 class="text-3xl font-serif font-bold">Menu of the Day</h2>
+<p class="text-xs uppercase opacity-60 tracking-widest mt-2">A curated three-course experience</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Appetizer -->
+<article class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col">
+<img alt="Appetizer" class="w-full aspect-square object-cover rounded-lg mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7FW1eeL-9NkD4fi4wE9lHov_8UeAvqMytrwuJ0-INRuSU8sigd2ZeEbndYy7OfK1vgjSxlz9GUAWjBGDQRxQyPDEIZzkidYRnC2vTpFutdYMwMPv2kGoFIDLmqPlsjNdE-lgjJ-NnZMDDbnGVJAq1UTyXm47G09fXvwFIrGHKb4pgzzaHGGBd6Ycgu56wChoY2dMzLtTUAzxzI0Fvk_ejPDu2PaBefWVKPcMqns52BlfmoWqEL1Z5hI730AEpqqu5uymV5xJnVZI"/>
+<span class="text-accent text-[10px] font-bold uppercase tracking-widest mb-1">Appetizer</span>
+<h3 class="font-serif text-xl font-bold mb-2">Wild Mushroom Tart</h3>
+<p class="text-gray-500 text-sm flex-grow">Puff pastry, thyme-roasted cremini, truffle oil essence.</p>
+</article>
+<!-- Main -->
+<article class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col">
+<img alt="Main Course" class="w-full aspect-square object-cover rounded-lg mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0e-TwWtRTgEyIq9oVDYdOLa5KRyUr9nOQKXKXlodIIwKXqNQAgrGSZ2DrCsOv3NcJ3_rubC8ww5GIaUV5I3yeKatTNk0P6Dl8OO8dbWBWumjmzPATzMmriqZ-AESaADH5Iwu_Sgvw-Q5NvuMIKLDgd2n3xqhu1QUOlRuPnUYpWc-WNloYoxggnXoD04wmp73rAMfEeP5YCo7aCAWbDVhWl0dGvhp26nTWe8LBKQSjyXlXUfp7HolVvnP-a8k5RoVNJhLfl6sJO38"/>
+<span class="text-primary text-[10px] font-bold uppercase tracking-widest mb-1">Main Course</span>
+<h3 class="font-serif text-xl font-bold mb-2">Pan-Seared Sea Bass</h3>
+<p class="text-gray-500 text-sm flex-grow">Saffron risotto, charred asparagus, lemon beurre blanc.</p>
+</article>
+<!-- Dessert -->
+<article class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col">
+<img alt="Dessert" class="w-full aspect-square object-cover rounded-lg mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmMCvOP2XujH3EWdeZ2T_qmo9WvUMzJdCgoKf5zOvJUFGGS45_o1inyau2xJpbHDL9aB84GlIe-1eWvLztS6at11_TbAFJl1ZZnv5f8CyVYYsfY2zLlzKLTkMTnv69DmxHOaxgSOkxKaq6podTFxL0PCMnaVE5xVUFnur8oLZkeiuuE6BNs6rIi2cFdLCHfXj4ZOkgrcLYZKuIyP_hX9sLW9sqXZ-PXHGXpEqwq3iu8sHzxy6AP2HtIr0z2qWEjeFGvEHD9dtRQpE"/>
+<span class="text-primary text-[10px] font-bold uppercase tracking-widest mb-1">Dessert</span>
+<h3 class="font-serif text-xl font-bold mb-2">Dark Chocolate Fondant</h3>
+<p class="text-gray-500 text-sm flex-grow">Raspberry coulis, Madagascar vanilla bean gelato.</p>
+</article>
+</div>
+<div class="mt-8 flex flex-col sm:flex-row justify-between items-center bg-surface p-6 rounded-xl">
+<div class="mb-4 sm:mb-0">
+<p class="text-xs uppercase opacity-60 font-bold">Prix Fixe Total</p>
+<p class="text-3xl font-serif font-bold">42€</p>
+</div>
+<button class="bg-on-surface text-white px-8 py-3 rounded-lg font-bold uppercase text-sm hover:opacity-90 transition-all">
+                        Reserve Table
+                    </button>
+</div>
+</section>
+<!-- Trending Dishes: Simple Grid -->
+<section>
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="text-2xl font-serif font-bold">Trending Dishes</h2>
+<p class="text-xs uppercase opacity-60 tracking-widest">Guest favorites this week</p>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<!-- Item 1 -->
+<div class="space-y-3">
+<img alt="Dish" class="w-full aspect-square object-cover rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD95pD1pjL-vTZ93KeGy3OioqNbko9YAWEtD716YQypfMJu4JKp3kuE-ByQvTbS_haafk1PO-1OpdWft9CCBzhNmEtphaFG9toOlzWazheYr-NxZcUjiPz4o5QEbsdyi-tAU1RrhMT0IBepOw3FCGNfGvJE_KYU-TrMJl1b2io--Tz8xm7I41c-KZKRzKiaQIF10kJFkYGXrQBmuIo5XA43nLuaKL8FLP4lnF9swPf_wMqJ6swvzzfdkh_9xa9LeqHjaHN2j4Fbmtk"/>
+<div class="flex justify-between items-start gap-2">
+<h4 class="font-serif font-bold text-sm">Ancient Grains Bowl</h4>
+<span class="text-sm font-semibold">16€</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="space-y-3">
+<img alt="Dish" class="w-full aspect-square object-cover rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCENWBeWneLNTh5NJmOx9JUYeIzD883c47QYD_0cTXPy6s-zOHV-kd54yiQwRn66RJtGoe2_jIMFhthpVruAAyqdjOTX8Px_8loyzWXOKqypoEngGxCXQuGGJia8iw2xymQXIBeo0O-OgMcDg7ZwX83Hg-pR6mCI30xvUbGhhnyTaO3yZ3i-FFDMNLLOo-y-9fsGu1xPscKITRhaBnPCeL3zUmzY_qMbgaqbRfP7lofGd58mhCcEJ1YElxXAkbrxrUFtUlR-dIAvbs"/>
+<div class="flex justify-between items-start gap-2">
+<h4 class="font-serif font-bold text-sm">Berry Mascarpone Tart</h4>
+<span class="text-sm font-semibold">12€</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="space-y-3">
+<img alt="Dish" class="w-full aspect-square object-cover rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgsagPPFWXCF-f-MqYnE6YUDi3CK26yZGl28fbtuOFSyhssWIiiwWp0SmqeqLE2S2hFctNE0aFJYaf9sMfLqRQrkHKB_1VbiibQdiD5dGR-ysbYlYcknD3UhE6NesqghQ5DCvVBMKFC5WLS337rn4gFo5uCvyY5W-9UVvkC1xoGDLCrfWk6k-UxML4LwD1PeeN0KyY4pwxk5DgC5y6cHnXiHIA34EISflOKdatKx_mKqlsyrcJ7Z8kEHMwO5ppo1H0G9_L6mfrbPQ"/>
+<div class="flex justify-between items-start gap-2">
+<h4 class="font-serif font-bold text-sm">Cedar Plank Salmon</h4>
+<span class="text-sm font-semibold">24€</span>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="space-y-3">
+<img alt="Dish" class="w-full aspect-square object-cover rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7fV5K_E6BPNRCVqH9WtlaeZimXwUnTgCT-HPbH_YQp94yDK2p9P9Je5OWdpWt8vRQFlfDyNO8tKIpVd2awS-K-wdWwg_M6z1c4CNZ3DYdnkG1v-NzK2RVdhwMJDgLYDjMFR67QCj9cUm1qbb13T71NR0eB57nichvyXeQus2pCko6oEM7tM2JpuiIeiYLC5UnbCK3N7YgnSpBovii3P8yw3X4RhdA_GrzgoZNwsrPML60lmgMQAhIUwZbc3J1vytC7a3-1ozfwHg"/>
+<div class="flex justify-between items-start gap-2">
+<h4 class="font-serif font-bold text-sm">Beef Carpaccio</h4>
+<span class="text-sm font-semibold">19€</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Simple Footer -->
+<footer class="bg-on-surface text-white py-12 mt-20">
+<div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="text-center md:text-left">
+<div class="text-2xl font-serif italic mb-2">The Daily Plate</div>
+<p class="text-xs opacity-50 uppercase tracking-widest">© 2024 Curated Dining Experience.</p>
+</div>
+<nav class="flex gap-8 text-xs font-bold uppercase tracking-widest opacity-70">
+<a class="hover:opacity-100 transition-opacity" href="#">Privacy</a>
+<a class="hover:opacity-100 transition-opacity" href="#">Terms</a>
+<a class="hover:opacity-100 transition-opacity" href="#">Contact</a>
+</nav>
+<div class="flex gap-4">
+<span class="material-symbols-outlined opacity-60 cursor-pointer hover:opacity-100">mail</span>
+<span class="material-symbols-outlined opacity-60 cursor-pointer hover:opacity-100">public</span>
+</div>
+</div>
+</footer>
+<!-- Simplified Cart Badge -->
+<div class="fixed bottom-6 right-6">
+<div class="bg-white border border-gray-200 rounded-full px-6 py-3 shadow-xl flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">restaurant_menu</span>
+<span class="text-xs font-bold uppercase tracking-widest">Cart (2)</span>
+<span class="font-serif font-bold">34€</span>
+</div>
+</div>
+</body></html>

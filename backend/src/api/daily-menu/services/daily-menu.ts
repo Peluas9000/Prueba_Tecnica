@@ -3,12 +3,12 @@ interface Plato {
   id: number;
   name: string;
   price: number;
-  // Puedes añadir más campos si los necesitas
+  
 }
 
 interface Menu {
   id: number;
-  postre?: Plato | null; // Le decimos que el menú puede tener un objeto Plato, o venir vacío
+  postre?: Plato | null;
 }
 export default factories.createCoreService(
   "api::daily-menu.daily-menu",
@@ -17,7 +17,7 @@ export default factories.createCoreService(
       // 1. Si no hay ID, devolvemos 0
       if (!identificador) return 0;
 
-      // 2. Usamos db.query SIEMPRE. Es ciego al Draft/Publish y nunca falla.
+     
       const plato: any = await strapi.db.query("api::dish.dish").findOne({
         where:
           typeof identificador === "string"
@@ -30,7 +30,7 @@ export default factories.createCoreService(
 
       let porcentajeIva = 0;
 
-      // 3. Calculamos el impuesto
+      
       if (plato.type === "Primero" || plato.type === "Segundo") {
         porcentajeIva = 0.1;
       } else if (plato.type === "Postre") {
@@ -52,7 +52,7 @@ export default factories.createCoreService(
         },
       )) as Menu[];
 
-      // Si no hay menús creados, devolvemos un array vacío para evitar errores
+      // Si no hay menús creados, devolvemos un array vacío
       if (!menus || menus.length === 0) {
         return [];
       }

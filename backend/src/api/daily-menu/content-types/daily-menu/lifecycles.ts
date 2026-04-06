@@ -26,9 +26,9 @@ export default {
     const idPostre = extraerIdReal(data.postre);
 
     if (
-      (idPrimero && idPrimero === idSegundo) ||
-      (idPrimero && idPrimero === idPostre) ||
-      (idSegundo && idSegundo === idPostre)
+      (idPrimero !== idSegundo) ||
+      (idPrimero !== idPostre) ||
+      (idSegundo !== idPostre)
     ) {
       throw new errors.ApplicationError(
         "Los platos deben ser diferentes entre sí",
@@ -51,18 +51,17 @@ export default {
   async beforeUpdate(event) {
     const { data, where } = event.params;
 
-    const menuActual: any = await strapi.db
-      .query("api::daily-menu.daily-menu")
-      .findOne({
-        where: where,
-        populate: ["primero", "segundo", "postre"],
-      });
+    const menuActual= await strapi.documents("api::daily-menu.daily-menu").findOne({
+      documentId: data.documentId || where.id,
+      populate: {
+        primero: true,
+        segundo: true,
+        postre: true,
+      },
+    }); 
 
     // Pasamos tanto el documentId como el id normal por seguridad
-    const idPrimero = extraerIdReal(
-      data.primero,
-      menuActual?.primero?.documentId || menuActual?.primero?.id,
-    );
+    const idPrimero = data.primero;
     const idSegundo = extraerIdReal(
       data.segundo,
       menuActual?.segundo?.documentId || menuActual?.segundo?.id,

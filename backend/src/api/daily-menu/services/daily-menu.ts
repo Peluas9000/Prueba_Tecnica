@@ -18,12 +18,10 @@ export default factories.createCoreService(
       if (!identificador) return 0;
 
      
-      const plato: any = await strapi.db.query("api::dish.dish").findOne({
-        where:
-          typeof identificador === "string"
-            ? { documentId: identificador }
-            : { id: identificador },
+      const plato = await strapi.documents("api::dish.dish").findOne({
+       documentId: identificador,
       });
+
 
       // Si no encuentra el plato o no tiene precio, suma 0
       if (!plato || !plato.price) return 0;
@@ -31,10 +29,12 @@ export default factories.createCoreService(
       let porcentajeIva = 0;
 
       
-      if (plato.type === "Primero" || plato.type === "Segundo") {
+      if (plato.type === "Primero" || plato.type === "Segundo ") {
         porcentajeIva = 0.1;
       } else if (plato.type === "Postre") {
         porcentajeIva = 0.21;
+      }else if(plato.type==="Segundo "){
+        porcentajeIva = 0.1;
       } else {
         porcentajeIva = 0.1;
       }
@@ -43,14 +43,12 @@ export default factories.createCoreService(
     },
     async devolverPostresSinRepetir() {
       // 1. Consultar todos los menús y poblar SOLO la relación del postre
-      const menus = (await strapi.entityService.findMany(
-        "api::daily-menu.daily-menu",
-        {
+      const menus = (await strapi.documents("api::daily-menu.daily-menu").findMany({
           populate: {
-            postre: true,
-          },
-        },
-      )) as Menu[];
+              postre: true,
+            },
+          
+      }  ));
 
       // Si no hay menús creados, devolvemos un array vacío
       if (!menus || menus.length === 0) {
